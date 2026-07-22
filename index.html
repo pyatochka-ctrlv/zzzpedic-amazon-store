@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZzzPedic — Amazon Brand Store Concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340;9..144,480;9..144,560&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#16203A;
+    --blue:#334D7A;
+    --blue-soft:#E4EAF4;
+    --white:#FFFFFF;
+    --stone:#F6F4EF;
+    --ink:#1C1F26;
+    --ink-soft:#5B6270;
+    --line:#E5E1D8;
+    --radius-l:28px;
+    --radius-m:18px;
+    --radius-s:10px;
+    --shadow: 0 20px 50px -25px rgba(22,32,58,0.25);
+    --shadow-soft: 0 10px 30px -18px rgba(22,32,58,0.18);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--white);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
+  img{max-width:100%;display:block;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:480;color:var(--navy);margin:0;letter-spacing:-0.01em;}
+  .eyebrow{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue);margin:0 0 14px;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  .amazon-chrome{background:#131A22;color:#fff;font-size:12px;padding:8px 0;text-align:center;letter-spacing:.02em;}
+  .store-nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .store-nav .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:14px;padding-bottom:14px;}
+  .store-nav .logo{font-family:'Fraunces',serif;font-size:20px;font-weight:560;color:var(--navy);letter-spacing:.01em;}
+  .store-nav nav{display:flex;gap:36px;font-size:13.5px;font-weight:500;color:var(--ink);}
+  .store-nav nav span{cursor:default;opacity:.85;}
+  .store-nav nav span.on{color:var(--blue);opacity:1;border-bottom:2px solid var(--blue);padding-bottom:4px;}
+
+  section{position:relative;}
+  .tag{display:inline-block;font-size:11px;letter-spacing:.08em;color:#9AA2AE;text-transform:uppercase;background:var(--stone);border:1px solid var(--line);padding:4px 10px;border-radius:100px;position:absolute;top:14px;left:14px;font-family:'Inter',sans-serif;font-weight:600;z-index:5;}
+
+  /* HERO */
+  .hero{min-height:88vh;display:flex;align-items:flex-end;overflow:hidden;background:var(--navy);}
+  .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center 30%;transition:filter 1.2s ease;}
+  .hero-darken{position:absolute;inset:0;background:rgba(10,14,26,.42);}
+  .hero-scrim{position:absolute;inset:0;background:linear-gradient(0deg, rgba(15,20,34,.82) 0%, rgba(15,20,34,.42) 42%, rgba(15,20,34,.05) 70%);}
+  .hero-inner{position:relative;z-index:2;padding:0 32px 72px;width:100%;color:#fff;}
+  .hero-inner .wrap{padding:0;}
+  .hero h1{color:#fff;font-size:clamp(38px,5.4vw,68px);line-height:1.03;max-width:820px;}
+  .hero .accent{color:#AFC3E8;font-style:italic;}
+  .hero p.sub{font-size:17px;line-height:1.6;color:#D7DCE6;max-width:480px;margin:20px 0 30px;font-weight:400;}
+  .btn{display:inline-flex;align-items:center;gap:10px;background:var(--navy);color:#fff;border:none;font-family:'Inter',sans-serif;font-weight:600;font-size:14.5px;padding:15px 28px;border-radius:100px;cursor:pointer;transition:transform .25s ease, background .25s ease;}
+  .btn:hover{transform:translateY(-2px);background:#0F1830;}
+  .btn.light{background:#fff;color:var(--navy);}
+  .btn.light:hover{background:#F1F0EB;}
+  .btn.ghost{background:transparent;color:#fff;border:1.4px solid rgba(255,255,255,.55);}
+  .hero-meta{display:flex;gap:28px;margin-top:36px;flex-wrap:wrap;}
+  .hero-meta .m-num{font-family:'Fraunces',serif;font-size:22px;color:#fff;font-weight:480;}
+  .hero-meta .m-lab{font-size:11.5px;color:#B7BFCC;text-transform:uppercase;letter-spacing:.08em;margin-top:2px;}
+  .therm-toggle{position:absolute;top:28px;right:32px;z-index:6;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(6px);border-radius:100px;padding:6px 14px 6px 6px;color:#fff;font-size:12px;font-weight:500;cursor:pointer;}
+  .therm-dot{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 30%, #fff, #AFC3E8 60%, #5C7BB5);transition:.6s ease;}
+
+  /* CATEGORY STRIP */
+  .cat-strip{padding:90px 0 30px;background:var(--white);}
+  .section-head{text-align:center;max-width:640px;margin:0 auto 52px;}
+  .section-head h2{font-size:clamp(28px,3.4vw,42px);}
+  .section-head p{color:var(--ink-soft);font-size:15.5px;line-height:1.6;margin-top:14px;}
+  .cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .cat-card{position:relative;border-radius:var(--radius-l);overflow:hidden;aspect-ratio:3/4;box-shadow:var(--shadow-soft);cursor:pointer;}
+  .cat-card img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.8,.2,1);}
+  .cat-card:hover img{transform:scale(1.06);}
+  .cat-card .cat-scrim{position:absolute;inset:0;background:linear-gradient(0deg, rgba(19,26,45,.78) 0%, rgba(19,26,45,0) 46%);}
+  .cat-card .cat-body{position:absolute;left:22px;right:22px;bottom:22px;color:#fff;}
+  .cat-card .cat-body .k{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#C6D2E8;font-weight:600;}
+  .cat-card .cat-body h3{color:#fff;font-size:23px;margin-top:6px;}
+  .cat-card .cat-body .price{font-size:13.5px;color:#DDE3EE;margin-top:8px;}
+
+  /* WHY CHOOSE */
+  .why{padding:100px 0;background:var(--stone);}
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border-radius:var(--radius-l);overflow:hidden;box-shadow:var(--shadow-soft);}
+  .why-card{background:#fff;padding:40px 34px;}
+  .why-icon{width:46px;height:46px;margin-bottom:22px;}
+  .why-card h3{font-family:'Inter',sans-serif;font-weight:600;font-size:17px;color:var(--navy);}
+  .why-card p{font-size:14px;color:var(--ink-soft);line-height:1.65;margin-top:10px;}
+
+  /* LIFESTYLE BANNER */
+  .lifestyle-banner{height:64vh;min-height:440px;display:flex;align-items:center;background-size:cover;background-position:center;position:relative;overflow:hidden;}
+  .lifestyle-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(3px) brightness(.75);transform:scale(1.04);}
+  .lifestyle-banner .scrim{position:absolute;inset:0;background:linear-gradient(90deg, rgba(15,20,34,.7) 0%, rgba(15,20,34,.28) 55%, rgba(15,20,34,.15) 100%);}
+  .lifestyle-banner .content{position:relative;z-index:2;color:#fff;max-width:480px;}
+  .lifestyle-banner h2{color:#fff;font-size:clamp(30px,3.8vw,44px);}
+  .lifestyle-banner p{color:#DCE1EA;margin-top:14px;font-size:16px;line-height:1.6;}
+
+  /* PRODUCTS */
+  .products{padding:100px 0;background:#fff;}
+  .prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+  .prod-card{border:1px solid var(--line);border-radius:var(--radius-m);overflow:hidden;transition:box-shadow .3s ease, transform .3s ease;background:#fff;}
+  .prod-card:hover{box-shadow:var(--shadow);transform:translateY(-4px);}
+  .prod-img{aspect-ratio:1/1;background:var(--stone);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+  .prod-img img{width:100%;height:100%;object-fit:cover;}
+  .prod-badge{position:absolute;top:14px;left:14px;background:var(--navy);color:#fff;font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:5px 10px;border-radius:100px;}
+  .prod-info{padding:22px 22px 24px;}
+  .prod-info .cat{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);font-weight:600;}
+  .prod-info h3{font-family:'Inter',sans-serif;font-weight:600;font-size:16.5px;color:var(--ink);margin-top:8px;line-height:1.35;}
+  .prod-meta{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12.5px;color:var(--ink-soft);}
+  .stars{color:#334D7A;letter-spacing:1px;font-size:12px;}
+  .prod-price{display:flex;align-items:baseline;gap:8px;margin-top:14px;}
+  .prod-price .now{font-family:'Fraunces',serif;font-size:20px;color:var(--navy);}
+  .prod-price .was{font-size:13px;color:#B3B8C2;text-decoration:line-through;}
+
+  /* BENEFITS STRIP */
+  .benefits{padding:70px 0;background:var(--navy);}
+  .benefit-row{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;}
+  .benefit-item{text-align:center;color:#fff;padding:0 8px;}
+  .benefit-item .b-icon{width:34px;height:34px;margin:0 auto 16px;opacity:.92;}
+  .benefit-item h4{font-family:'Inter',sans-serif;font-weight:600;font-size:14px;margin:0;}
+  .benefit-item p{font-size:12px;color:#AEB6C4;margin-top:6px;line-height:1.5;}
+
+  /* BRAND STORY */
+  .story{padding:110px 0;background:#fff;}
+  .story-grid{display:grid;grid-template-columns:0.95fr 1.05fr;gap:70px;align-items:center;}
+  .story-img{border-radius:var(--radius-l);overflow:hidden;box-shadow:var(--shadow-soft);aspect-ratio:4/5;}
+  .story-img img{width:100%;height:100%;object-fit:cover;}
+  .story h2{font-size:clamp(28px,3.2vw,38px);margin-bottom:22px;}
+  .story p{font-size:15.5px;line-height:1.75;color:var(--ink-soft);margin-bottom:18px;}
+  .story blockquote{border-left:2.5px solid var(--blue);padding-left:20px;margin:28px 0;font-family:'Fraunces',serif;font-style:italic;font-size:17px;color:var(--navy);line-height:1.55;}
+  .story blockquote cite{display:block;font-family:'Inter',sans-serif;font-style:normal;font-size:12.5px;color:var(--ink-soft);margin-top:10px;font-weight:500;}
+  .story-stats{display:flex;gap:36px;margin-top:32px;padding-top:28px;border-top:1px solid var(--line);}
+  .story-stats .stat b{font-family:'Fraunces',serif;font-size:26px;color:var(--navy);font-weight:480;display:block;}
+  .story-stats .stat span{font-size:12px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;}
+
+  /* COMPARISON */
+  .compare{padding:100px 0;background:var(--stone);}
+  .compare-table{background:#fff;border-radius:var(--radius-l);box-shadow:var(--shadow-soft);overflow:hidden;}
+  .compare-row{display:grid;grid-template-columns:1.4fr repeat(4,1fr);align-items:center;padding:18px 30px;border-bottom:1px solid var(--line);}
+  .compare-row:last-child{border-bottom:none;}
+  .compare-row.head{background:var(--navy);color:#fff;padding:20px 30px;}
+  .compare-row.head div{font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;text-align:center;}
+  .compare-row.head div:first-child{text-align:left;}
+  .compare-row.zz{background:var(--blue-soft);}
+  .compare-metric{font-size:14px;color:var(--ink);font-weight:500;}
+  .compare-metric b{display:block;font-family:'Fraunces',serif;font-weight:560;color:var(--navy);font-size:15.5px;}
+  .compare-val{text-align:center;font-size:14px;color:var(--ink-soft);}
+  .compare-val.brand{color:var(--navy);font-weight:700;}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--blue);display:inline-block;margin-right:6px;}
+
+  /* VIDEO */
+  .video-block{padding:100px 0;background:#fff;}
+  .video-shell{position:relative;border-radius:var(--radius-l);overflow:hidden;aspect-ratio:21/9;box-shadow:var(--shadow);background:var(--navy);}
+  .video-shell img{width:100%;height:100%;object-fit:cover;opacity:.75;}
+  .play-btn{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+  .play-circle{width:82px;height:82px;border-radius:50%;background:rgba(255,255,255,.94);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.3);transition:transform .3s ease;}
+  .video-shell:hover .play-circle{transform:scale(1.08);}
+  .video-caption{position:absolute;left:32px;bottom:26px;color:#fff;font-family:'Fraunces',serif;font-size:19px;font-style:italic;}
+
+  /* CUSTOMER LIFESTYLE */
+  .social{padding:100px 0;background:var(--stone);}
+  .social-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+  .social-grid a{display:block;border-radius:var(--radius-s);overflow:hidden;aspect-ratio:1/1;}
+  .social-grid img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+  .social-grid a:hover img{transform:scale(1.08);}
+
+  /* BEST SELLERS */
+  .bestsellers{padding:100px 0;background:#fff;}
+  .bs-row{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .bs-card{display:flex;gap:16px;align-items:center;padding:18px;border:1px solid var(--line);border-radius:var(--radius-m);}
+  .bs-rank{font-family:'Fraunces',serif;font-size:26px;color:var(--blue-soft);font-weight:560;width:34px;flex-shrink:0;}
+  .bs-thumb{width:72px;height:72px;border-radius:var(--radius-s);overflow:hidden;flex-shrink:0;background:var(--stone);}
+  .bs-thumb img{width:100%;height:100%;object-fit:cover;}
+  .bs-txt h4{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;margin:0 0 4px;color:var(--ink);}
+  .bs-txt .p{font-family:'Fraunces',serif;color:var(--navy);font-size:15.5px;}
+  .bs-txt .r{font-size:11.5px;color:var(--ink-soft);}
+
+  /* FOOTER BANNER */
+  .foot-banner{padding:110px 0;background:var(--navy);text-align:center;position:relative;overflow:hidden;}
+  .foot-banner::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 120%, rgba(175,195,232,.22), transparent 60%);}
+  .foot-banner .wrap{position:relative;z-index:2;}
+  .foot-banner h2{color:#fff;font-size:clamp(30px,4vw,46px);max-width:720px;margin:0 auto;}
+  .foot-banner p{color:#B7BFCC;margin:20px auto 34px;max-width:460px;font-size:15px;line-height:1.6;}
+
+  .amz-strip{background:#F0EFEA;border-top:1px solid var(--line);padding:16px 0;text-align:center;font-size:11.5px;color:#8A8F98;letter-spacing:.03em;}
+
+  @media(max-width:860px){
+    .cat-grid,.why-grid,.prod-grid,.benefit-row,.bs-row{grid-template-columns:1fr;}
+    .social-grid{grid-template-columns:repeat(3,1fr);}
+    .story-grid{grid-template-columns:1fr;}
+    .compare-row{grid-template-columns:1.2fr repeat(4,0.8fr);padding:14px 16px;font-size:12px;}
+    .store-nav nav{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="amazon-chrome">amazon.com  ›  Stores  ›  ZzzPedic &nbsp;&nbsp;|&nbsp;&nbsp; Concept homepage — built to Amazon Store Builder tile structure</div>
+
+<div class="store-nav">
+  <div class="wrap">
+    <div class="logo">ZzzPedic</div>
+    <nav>
+      <span class="on">Home</span>
+      <span>Pillows</span>
+      <span>Bedsheets</span>
+      <span>Pillowcases</span>
+      <span>Our Story</span>
+    </nav>
+  </div>
+</div>
+
+<!-- 1. HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg" id="heroBg" style="background-image:url('https://res.cloudinary.com/iqsbzldw/image/upload/v1784713307/iam_os-tgMKcE-Qo5o-unsplash_1_qulcxr.jpg')"></div>
+  <div class="hero-darken"></div>
+  <div class="hero-scrim"></div>
+  <div class="therm-toggle" id="thermToggle"><span>3–5° cooler</span><span class="therm-dot" id="thermDot"></span></div>
+  <div class="hero-inner">
+    <div class="wrap">
+      <h1>Sleep <span class="accent">cooler.</span><br>Wake up <span class="accent">rested.</span></h1>
+      <p class="sub">Dual-sided cooling pillows and bamboo-viscose sheets engineered to keep you 3–5° below room temperature, all night long.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;">
+        <button class="btn light">Shop Cooling Collection</button>
+        <button class="btn ghost">See How It Works</button>
+      </div>
+      <div class="hero-meta">
+        <div><div class="m-num">100K+</div><div class="m-lab">Sleepers switched</div></div>
+        <div><div class="m-num">2,100+</div><div class="m-lab">Verified reviews</div></div>
+        <div><div class="m-num">10-Yr</div><div class="m-lab">Warranty</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. FEATURED CATEGORIES -->
+<section class="cat-strip">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Shop by category</div>
+      <h2>Three ways to sleep cooler tonight</h2>
+      <p>Every category is built on the same PolyethylTex™ and bamboo-viscose cooling system — pick your starting point.</p>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card">
+        <img src="https://zzz-pedic.com/cdn/shop/files/1.jpg?v=1759374146" alt="Magic Cooling Pillow">
+        <div class="cat-scrim"></div>
+        <div class="cat-body"><div class="k">Pillows</div><h3>Magic Cooling Pillow</h3><div class="price">From $78 · 879 reviews</div></div>
+      </div>
+      <div class="cat-card">
+        <img src="https://zzz-pedic.com/cdn/shop/files/3.png?v=1759374232&width=800" alt="Magic Cooling Body Pillow">
+        <div class="cat-scrim"></div>
+        <div class="cat-body"><div class="k">Body Pillows</div><h3>Magic Cooling Body Pillow</h3><div class="price">From $98 · 593 reviews</div></div>
+      </div>
+      <div class="cat-card">
+        <img src="https://zzz-pedic.com/cdn/shop/files/WHITE_SHEET_SET_MAIN_39412f52-c1cf-4751-9bb0-f7b6f34c8eb3.png?v=1777985148" alt="Magic Cooling Bedsheets">
+        <div class="cat-scrim"></div>
+        <div class="cat-body"><div class="k">Bedsheets</div><h3>Magic Cooling Bedsheets</h3><div class="price">From $99 · 662 reviews</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. WHY CHOOSE -->
+<section class="why">
+  <div class="wrap">
+    <div class="section-head" style="margin-top:0;">
+      <h2>Six reasons hot sleepers switch</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <svg class="why-icon" viewBox="0 0 48 48" fill="none"><path d="M24 6v14M24 28v14M12 24h6M30 24h6" stroke="#334D7A" stroke-width="1.6" stroke-linecap="round"/><circle cx="24" cy="24" r="20" stroke="#334D7A" stroke-width="1.3" opacity=".35"/></svg>
+        <h3>Dual-Sided Cooling</h3>
+        <p>PolyethylTex™ fabric stays 3–5° cooler than room temperature on one side; breathable bamboo on the other.</p>
+      </div>
+      <div class="why-card">
+        <svg class="why-icon" viewBox="0 0 48 48" fill="none"><path d="M10 30c4-10 8-14 14-14s10 4 14 14" stroke="#334D7A" stroke-width="1.6" stroke-linecap="round"/><path d="M14 34h20" stroke="#334D7A" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <h3>Adjustable Support</h3>
+        <p>Removable shredded memory foam inserts let you set the exact loft for side, back, or stomach sleeping.</p>
+      </div>
+      <div class="why-card">
+        <svg class="why-icon" viewBox="0 0 48 48" fill="none"><path d="M24 6c6 6 10 12 10 19a10 10 0 0 1-20 0c0-7 4-13 10-19Z" stroke="#334D7A" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <h3>Bamboo-Viscose Luxury</h3>
+        <p>300 thread-count bamboo-derived viscose feels silky-smooth while naturally wicking moisture.</p>
+      </div>
+      <div class="why-card">
+        <svg class="why-icon" viewBox="0 0 48 48" fill="none"><rect x="8" y="14" width="32" height="24" rx="3" stroke="#334D7A" stroke-width="1.6"/><path d="M8 20h32M16 26l4 4 8-8" stroke="#334D7A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>Machine Washable</h3>
+        <p>Pillowcases and sheets hold their cooling properties and softness, wash after wash.</p>
+      </div>
+      <div class="why-card">
+        <svg class="why-icon" viewBox="0 0 48 48" fill="none"><path d="M14 30V18a10 10 0 0 1 20 0v12" stroke="#334D7A" stroke-width="1.6" stroke-linecap="round"/><rect x="10" y="28" width="8" height="10" rx="2" stroke="#334D7A" stroke-width="1.6"/><rect x="30" y="28" width="8" height="10" rx="2" stroke="#334D7A" stroke-width="1.6"/></svg>
+        <h3>Premium Spinal Support</h3>
+        <p>High-density memory foam contours to head and neck for consistent alignment all night.</p>
+      </div>
+      <div class="why-card">
+        <svg class="why-icon" viewBox="0 0 48 48" fill="none"><path d="M8 24c4-6 8-9 16-9s12 3 16 9c-4 6-8 9-16 9s-12-3-16-9Z" stroke="#334D7A" stroke-width="1.6" stroke-linejoin="round"/><circle cx="24" cy="24" r="4" stroke="#334D7A" stroke-width="1.6"/></svg>
+        <h3>Hypoallergenic</h3>
+        <p>Sensitive-skin friendly materials that stay fresh, breathable, and gentle night after night.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. LIFESTYLE BANNER -->
+<section class="lifestyle-banner">
+  <video class="lifestyle-video" autoplay muted loop playsinline poster="https://zzz-pedic.com/cdn/shop/files/DARKGREYBREATHABLE..png?v=1777992582">
+    <source src="https://res.cloudinary.com/iqsbzldw/video/upload/v1784713484/6940017-hd_1920_1080_25fps_ldyvsh.mp4" type="video/mp4">
+  </video>
+  <div class="scrim"></div>
+  <div class="wrap">
+    <div class="content">
+      <h2>Breathe easier. Sleep deeper.</h2>
+      <p>Airflow engineered into every fiber, for the nights that matter most.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5. FEATURED PRODUCTS -->
+<section class="products">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Featured products</div>
+      <h2>The Magic Cooling collection</h2>
+    </div>
+    <div class="prod-grid">
+      <div class="prod-card">
+        <div class="prod-img"><span class="prod-badge">40% Off</span><img src="https://zzz-pedic.com/cdn/shop/files/1.jpg?v=1759374146" alt="Magic Cooling Pillow"></div>
+        <div class="prod-info">
+          <div class="cat">Pillows</div>
+          <h3>Magic Cooling Adjustable Shredded Memory Foam Cloud Pillow</h3>
+          <div class="prod-meta"><span class="stars">★★★★★</span><span>879 reviews</span></div>
+          <div class="prod-price"><span class="now">$78</span><span class="was">$130</span></div>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-img"><span class="prod-badge">Best Seller</span><img src="https://zzz-pedic.com/cdn/shop/files/3.png?v=1759374232&width=800" alt="Magic Cooling Body Pillow"></div>
+        <div class="prod-info">
+          <div class="cat">Body Pillows</div>
+          <h3>Magic Cooling Adjustable Shredded Memory Foam Cloud Body Pillow</h3>
+          <div class="prod-meta"><span class="stars">★★★★★</span><span>593 reviews</span></div>
+          <div class="prod-price"><span class="now">$98</span><span class="was">$149</span></div>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-img"><span class="prod-badge">45% Off</span><img src="https://zzz-pedic.com/cdn/shop/files/WHITE_SHEET_SET_MAIN_39412f52-c1cf-4751-9bb0-f7b6f34c8eb3.png?v=1777985148" alt="Magic Cooling Bedsheets"></div>
+        <div class="prod-info">
+          <div class="cat">Bedsheets</div>
+          <h3>Magic Cooling Bedsheets Set — 5 colorways</h3>
+          <div class="prod-meta"><span class="stars">★★★★★</span><span>662 reviews</span></div>
+          <div class="prod-price"><span class="now">$99</span><span class="was">$149</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. BENEFITS STRIP -->
+<section class="benefits">
+  <div class="wrap">
+    <div class="benefit-row">
+      <div class="benefit-item">
+        <svg class="b-icon" viewBox="0 0 48 48" fill="none"><path d="M24 6v36M14 16l10-10 10 10M14 32l10 10 10-10" stroke="#AFC3E8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h4>Cooling</h4><p>3–5° below room temp</p>
+      </div>
+      <div class="benefit-item">
+        <svg class="b-icon" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="16" stroke="#AFC3E8" stroke-width="1.5"/><path d="M18 24a6 6 0 0 1 12 0" stroke="#AFC3E8" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <h4>Comfort</h4><p>Silky bamboo-viscose feel</p>
+      </div>
+      <div class="benefit-item">
+        <svg class="b-icon" viewBox="0 0 48 48" fill="none"><path d="M10 34V20a14 14 0 0 1 28 0v14" stroke="#AFC3E8" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <h4>Support</h4><p>Adjustable spinal alignment</p>
+      </div>
+      <div class="benefit-item">
+        <svg class="b-icon" viewBox="0 0 48 48" fill="none"><path d="M24 8c-8 6-14 12-14 20a14 14 0 0 0 28 0c0-8-6-14-14-20Z" stroke="#AFC3E8" stroke-width="1.5"/></svg>
+        <h4>Sleep Better</h4><p>Fewer wake-ups, deeper rest</p>
+      </div>
+      <div class="benefit-item">
+        <svg class="b-icon" viewBox="0 0 48 48" fill="none"><path d="M24 8l4 9 10 1-7 7 2 10-9-5-9 5 2-10-7-7 10-1 4-9Z" stroke="#AFC3E8" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        <h4>Luxury Feel</h4><p>Hotel-grade materials at home</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. BRAND STORY -->
+<section class="story">
+  <div class="wrap">
+    <div class="story-grid">
+      <div class="story-img"><img src="https://zzz-pedic.com/cdn/shop/files/CREAMBEDROOM.png?v=1777991915" alt="ZzzPedic bedroom"></div>
+      <div>
+        <div class="eyebrow">Our story</div>
+        <h2>Built around one idea: temperature is the missing piece of sleep.</h2>
+        <p>ZzzPedic started with a simple frustration — waking up overheated, night after night. So the team set out to engineer bedding around thermoregulation first, comfort second, using dual-sided cooling fabrics and bamboo-derived viscose instead of the synthetic blends most "cooling" bedding relies on.</p>
+        <blockquote>
+          Sleep specialists note that a consistently cool sleep surface is one of the more reliable ways to prevent the overheating that disrupts deep sleep.
+          <cite>Laura McKeenan, M.D. — Somnologist</cite>
+        </blockquote>
+        <div class="story-stats">
+          <div class="stat"><b>100K+</b><span>Customers</span></div>
+          <div class="stat"><b>2,100+</b><span>Reviews</span></div>
+          <div class="stat"><b>10 yrs</b><span>Warranty</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. COMPARISON -->
+<section class="compare">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">How we compare</div>
+      <h2>ZzzPedic vs. ordinary bedding fabrics</h2>
+      <p>Independent cooling-rate (Qmax) testing against the fabrics most "cooling" bedding is made from.</p>
+    </div>
+    <div class="compare-table">
+      <div class="compare-row head">
+        <div>Fabric</div><div>Cooling Rate</div><div>Moisture Wicking</div><div>Breathability</div><div>Machine Washable</div>
+      </div>
+      <div class="compare-row zz">
+        <div class="compare-metric"><span class="dot"></span><b>ZzzPedic</b>PolyethylTex™ / Bamboo</div>
+        <div class="compare-val brand">0.40 Qmax</div><div class="compare-val brand">Exceptional</div><div class="compare-val brand">Advanced</div><div class="compare-val brand">Yes</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-metric"><b>Silk</b>Traditional</div>
+        <div class="compare-val">0.19 Qmax</div><div class="compare-val">Low</div><div class="compare-val">Moderate</div><div class="compare-val">No</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-metric"><b>Eucalyptus</b>Traditional</div>
+        <div class="compare-val">0.15 Qmax</div><div class="compare-val">Medium</div><div class="compare-val">Moderate</div><div class="compare-val">Yes</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-metric"><b>Cotton</b>Traditional</div>
+        <div class="compare-val">0.11 Qmax</div><div class="compare-val">Medium</div><div class="compare-val">Low</div><div class="compare-val">Yes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. VIDEO -->
+<section class="video-block">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">See it in action</div>
+      <h2>Loved by thousands of hot sleepers</h2>
+    </div>
+    <div class="video-shell">
+      <img src="https://zzz-pedic.com/cdn/shop/files/preview_images/389ef56980414e0c89ae2e2a2051ca88.thumbnail.0000000000.jpg?v=1774252726&width=1600" alt="Customer video">
+      <div class="play-btn"><div class="play-circle"><svg width="26" height="26" viewBox="0 0 24 24" fill="#16203A"><path d="M8 5v14l11-7L8 5Z"/></svg></div></div>
+      <div class="video-caption">"A game-changer for hot sleepers"</div>
+    </div>
+  </div>
+</section>
+
+<!-- 10. CUSTOMER LIFESTYLE -->
+<section class="social">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Real bedrooms, real customers</div>
+      <h2>#ZzzPedic in the wild</h2>
+    </div>
+    <div class="social-grid">
+      <a><img src="https://zzz-pedic.com/cdn/shop/files/instagram-img-01.jpg?v=1731931506"></a>
+      <a><img src="https://zzz-pedic.com/cdn/shop/files/instagram-img-02.jpg?v=1731931506"></a>
+      <a><img src="https://zzz-pedic.com/cdn/shop/files/instagram-img-03.jpg?v=1731931506"></a>
+      <a><img src="https://zzz-pedic.com/cdn/shop/files/instagram-img-04.jpg?v=1731931506"></a>
+      <a><img src="https://zzz-pedic.com/cdn/shop/files/instagram-img-05.jpg?v=1731931504"></a>
+    </div>
+  </div>
+</section>
+
+<!-- 11. BEST SELLERS -->
+<section class="bestsellers">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Best sellers</div>
+      <h2>Ranked by customer reviews</h2>
+    </div>
+    <div class="bs-row">
+      <div class="bs-card">
+        <div class="bs-rank">01</div>
+        <div class="bs-thumb"><img src="https://zzz-pedic.com/cdn/shop/files/1.jpg?v=1759374146"></div>
+        <div class="bs-txt"><h4>Magic Cooling Pillow</h4><div class="p">$78</div><div class="r">★★★★★ 879 reviews</div></div>
+      </div>
+      <div class="bs-card">
+        <div class="bs-rank">02</div>
+        <div class="bs-thumb"><img src="https://zzz-pedic.com/cdn/shop/files/WHITE_SHEET_SET_MAIN_39412f52-c1cf-4751-9bb0-f7b6f34c8eb3.png?v=1777985148"></div>
+        <div class="bs-txt"><h4>Magic Cooling Bedsheets</h4><div class="p">$99</div><div class="r">★★★★★ 662 reviews</div></div>
+      </div>
+      <div class="bs-card">
+        <div class="bs-rank">03</div>
+        <div class="bs-thumb"><img src="https://zzz-pedic.com/cdn/shop/files/3.png?v=1759374232&width=200"></div>
+        <div class="bs-txt"><h4>Magic Cooling Body Pillow</h4><div class="p">$98</div><div class="r">★★★★★ 593 reviews</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12. FOOTER BANNER -->
+<section class="foot-banner">
+  <div class="wrap">
+    <h2>Restful, rejuvenating sleep — engineered for every night.</h2>
+    <p>Discover the full Magic Cooling collection and see why over 100,000 sleepers made the switch.</p>
+    <button class="btn light">Shop All ZzzPedic</button>
+  </div>
+</section>
+
+<div class="amz-strip">Concept homepage for the ZzzPedic Amazon Brand Store · Built to Amazon Store Builder's modular tile structure</div>
+
+<script>
+  const bg = document.getElementById('heroBg');
+  const dot = document.getElementById('thermDot');
+  const toggle = document.getElementById('thermToggle');
+  let cool = true;
+  toggle.addEventListener('click', () => {
+    cool = !cool;
+    if(cool){
+      bg.style.filter = 'none';
+      dot.style.background = 'radial-gradient(circle at 35% 30%, #fff, #AFC3E8 60%, #5C7BB5)';
+      toggle.querySelector('span').textContent = '3–5° cooler';
+    } else {
+      bg.style.filter = 'sepia(.35) saturate(1.4) hue-rotate(-20deg) brightness(.95)';
+      dot.style.background = 'radial-gradient(circle at 35% 30%, #fff, #E8B98A 60%, #B5744C)';
+      toggle.querySelector('span').textContent = 'ordinary bedding';
+    }
+  });
+</script>
+
+</body>
+</html>
